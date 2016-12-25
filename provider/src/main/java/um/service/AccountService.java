@@ -3,6 +3,7 @@ package um.service;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import um.exception.ServiceException;
+import um.vo.AccountVO;
 
 @Service
 public class AccountService implements IAccountService {
@@ -25,4 +26,10 @@ public class AccountService implements IAccountService {
         }
         return null;
     }
+
+    @Override
+    public AccountVO getAccount(String username) throws ServiceException {
+        return null;
+    }
+
 }

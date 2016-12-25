@@ -1,6 +1,7 @@
 package um.service;
 
 import um.exception.ServiceException;
+import um.vo.AccountVO;
 
 /**
  * 账号类服务接口
@@ -32,5 +33,13 @@ public interface IAccountService {
      * @return 账号ID
      */
     Integer login(String username,String password) throws ServiceException;
+
+    /**
+     * 获取账号
+     * @param username
+     * @return
+     * @throws ServiceException
+     */
+    public AccountVO getAccount(String username) throws ServiceException;
 }
 
