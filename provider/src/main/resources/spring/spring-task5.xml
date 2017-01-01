@@ -14,10 +14,6 @@
         <property name="dataSource" ref="springDSN"/>
     </bean>
 
-    <bean id="studentDAO-tutorial" class="um.dao.AccountDAO">
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-
     <context:component-scan base-package="um"/>
 
 </beans>
