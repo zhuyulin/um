@@ -1,5 +1,4 @@
 package um.service;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,11 @@ public class AccountService implements IAccountService {
             throws ServiceException{
         List<AccountDO> checkusername = accountDAO.findByUserName(username);
         if (StringUtils.isBlank(username)) {
-            throw new ServiceException("用户名为空", "10001");
+            throw new ServiceException("用户名为空", "10009");
 
         }
         else if (checkusername.size() >0) {
-            throw new ServiceException("用户名已存在", "10007");
+            throw new ServiceException("用户名已存在", "10008");
         }
             else {
             accountDAO.createNewAccount(username,password,mobile_phone,email);
@@ -43,6 +42,9 @@ public class AccountService implements IAccountService {
 
         } else if (checkuserid.size() == 0) {
             throw new ServiceException("找不到该用户ID", "10005");
+
+        } else if (checkuserid.size() == 1 && !checkuserid.get(1).getPassword().equals(DigestUtils.md5Hex(oldpassword))){
+            throw new ServiceException("旧密码输入错误", "10007");
 
         } else if (checkuserid.size() == 1 && checkuserid.get(1).getPassword().equals(DigestUtils.md5Hex(oldpassword))) {
             accountDAO.updatePasswordById(DigestUtils.md5Hex(newpassword),id);
