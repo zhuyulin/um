@@ -41,10 +41,10 @@ public class AccountService implements IAccountService {
         if (id == null) {
             throw new ServiceException("ID为空", "10004");
 
-        } else if (checkuserid.size() == 0 || checkuserid == null) {
+        } else if (checkuserid.size() == 0) {
             throw new ServiceException("找不到该用户ID", "10005");
 
-        } else if (checkuserid.size() == 1 && checkuserid.get(1).getPassword() == DigestUtils.md5Hex(oldpassword)) {
+        } else if (checkuserid.size() == 1 && checkuserid.get(1).getPassword().equals(DigestUtils.md5Hex(oldpassword))) {
             accountDAO.updatePasswordById(DigestUtils.md5Hex(newpassword),id);
             throw new ServiceException("密码修改成功", "10006");
         }
@@ -60,10 +60,10 @@ public class AccountService implements IAccountService {
         if (StringUtils.isBlank(username)) {
             throw new ServiceException("用户名为空", "10001");
 
-        } else if (checkusername.size() == 0 || checkusername == null) {
+        } else if (checkusername.size() == 0) {
             throw new ServiceException("找不到用户名", "10002");
 
-        } else if (checkusername.size() == 1 && checkusername.get(1).getPassword() == DigestUtils.md5Hex(password)) {
+        } else if (checkusername.size() == 1 && checkusername.get(1).getPassword().equals(DigestUtils.md5Hex(password))) {
             return checkusername.get(1).getId();
         }
         else throw new ServiceException("未知异常", "10003");
@@ -74,9 +74,7 @@ public class AccountService implements IAccountService {
         //检查参数
 
         AccountDO accountDO = (AccountDO) accountDAO.findByUserName(username);
-
         AccountVO accountVO = new AccountVO();
-        //todo:转化成VO
         accountVO.setUserName(accountDO.getUserName());
         accountVO.setNickName(accountDO.getNickName());
         accountVO.setMobilePhone(accountDO.getMobilePhone());
