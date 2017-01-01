@@ -16,6 +16,21 @@ public class AccountService implements IAccountService {
     private AccountDAO accountDAO;
 
     @Override
+    public Integer login(String username, String password)throws ServiceException {
+        List<AccountDO> checkusername = accountDAO.findByUserName(username);
+        if (StringUtils.isBlank(username)) {
+            throw new ServiceException("用户名为空", "10001");
+
+        } else if (checkusername.size() == 0) {
+            throw new ServiceException("找不到用户名", "10002");
+
+        } else if (checkusername.size() == 1 && checkusername.get(1).getPassword().equals(DigestUtils.md5Hex(password))) {
+            return checkusername.get(1).getId();
+        }
+        else throw new ServiceException("未知异常", "10003");
+    }
+
+    @Override
     public Integer register(String username, String password, String mobile_phone, String email)
             throws ServiceException{
         List<AccountDO> checkusername = accountDAO.findByUserName(username);
@@ -53,22 +68,6 @@ public class AccountService implements IAccountService {
         else throw new ServiceException("未知异常", "10003");
 
 
-    }
-
-
-    @Override
-    public Integer login(String username, String password)throws ServiceException {
-        List<AccountDO> checkusername = accountDAO.findByUserName(username);
-        if (StringUtils.isBlank(username)) {
-            throw new ServiceException("用户名为空", "10001");
-
-        } else if (checkusername.size() == 0) {
-            throw new ServiceException("找不到用户名", "10002");
-
-        } else if (checkusername.size() == 1 && checkusername.get(1).getPassword().equals(DigestUtils.md5Hex(password))) {
-            return checkusername.get(1).getId();
-        }
-        else throw new ServiceException("未知异常", "10003");
     }
 
     @Override

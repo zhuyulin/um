@@ -1,11 +1,14 @@
 package um.dao;
 import java.util.List;
+
+import org.springframework.stereotype.Repository;
 import um.dataobject.AccountDO;
 import um.vo.AccountVO;
 
 /**
  * Created by Yuleen on 2016/12/31.
  */
+@Repository
 public class AccountDAO extends BaseDAO  {
     public List<AccountDO> findByUserName(String username){
         StringBuilder sql = new StringBuilder("select * from account where user_name = ?");
