@@ -41,5 +41,14 @@ public interface IAccountService {
      * @throws ServiceException
      */
     public AccountVO getAccount(String username) throws ServiceException;
+
+    /**
+     * 获取ID
+     * @param id
+     * @return
+     * @throws ServiceException
+     */
+
+    public AccountVO getAccount(Integer id) throws ServiceException;
 }
 

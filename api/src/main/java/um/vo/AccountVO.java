@@ -12,7 +12,7 @@ public class AccountVO {
     private String mobilePhone;
     private String email;
     private Date lastLoginTime;
-    private String station;
+    private String state;
 
     public String getUserName() {
         return userName;
@@ -54,12 +54,12 @@ public class AccountVO {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public String getStation() {
-        return station;
+    public String getState() {
+        return state;
     }
 
-    public void setStation(String station) {
-        this.station = station;
+    public void setState(String station) {
+        this.state = station;
     }
 //好友数
 

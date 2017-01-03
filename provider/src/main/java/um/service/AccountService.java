@@ -25,7 +25,7 @@ public class AccountService implements IAccountService {
             throw new ServiceException("找不到用户名", "10002");
 
         }
-        else if (checkUserName.size() >1) {
+        else if (checkUserName.size() >0) {
             throw new ServiceException("存在多个用户", "10003");
 
         }
@@ -64,18 +64,17 @@ public class AccountService implements IAccountService {
             throw new ServiceException("ID为空", "10006");
 
         }
-        if (checkUserId.size() == 0) {
-            throw new ServiceException("找不到该用户ID", "10007");
-
+        else if (checkUserId.size() == 1 && checkUserId.get(0).getPassword().equals(DigestUtils.md5Hex(oldPassword))) {
+            accountDAO.updatePasswordById(DigestUtils.md5Hex(newPassword),id);
         }
-        if (checkUserId.size() == 1 && !checkUserId.get(1).getPassword().equals(DigestUtils.md5Hex(oldPassword))){
+        else if (checkUserId.size() == 1 && !checkUserId.get(0).getPassword().equals(DigestUtils.md5Hex(oldPassword))){
             throw new ServiceException("旧密码输入错误", "10008");
 
         }
-        if (checkUserId.size() == 1 && checkUserId.get(1).getPassword().equals(DigestUtils.md5Hex(oldPassword))) {
-            accountDAO.updatePasswordById(DigestUtils.md5Hex(newPassword),id);
-            throw new ServiceException("密码修改成功", "10009");
+        else if (checkUserId.size() == 0) {
+            throw new ServiceException("找不到该用户ID", "10007");
         }
+        else throw new ServiceException("未知错误", "00000");
 
     }
 
@@ -90,7 +89,22 @@ public class AccountService implements IAccountService {
         accountVO.setMobilePhone(accountDO.getMobilePhone());
         accountVO.setLastLoginTime(accountDO.getLastLoginTime());
         accountVO.setEmail(accountDO.getEmail());
-        accountVO.setStation(accountDO.getState().getState());
+        accountVO.setState(accountDO.getState().getState());
+        return accountVO;
+    }
+
+    @Override
+    public AccountVO getAccount(Integer id) throws ServiceException {
+        //检查参数
+
+        AccountDO accountDO = (AccountDO) accountDAO.findByUserId(id);
+        AccountVO accountVO = new AccountVO();
+        accountVO.setUserName(accountDO.getUserName());
+        accountVO.setNickName(accountDO.getNickName());
+        accountVO.setMobilePhone(accountDO.getMobilePhone());
+        accountVO.setLastLoginTime(accountDO.getLastLoginTime());
+        accountVO.setEmail(accountDO.getEmail());
+        accountVO.setState(accountDO.getState().getState());
         return accountVO;
     }
 

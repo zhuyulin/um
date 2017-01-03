@@ -1,13 +1,8 @@
 package um.dataobject;
-
-import com.sun.xml.internal.rngom.parse.host.Base;
-import org.springframework.jdbc.core.RowMapper;
-import um.emum.AccountStateEmum;
-
-import java.io.Serializable;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import um.enums.AccountStateEnum;
 
 /**
  * Created by Yuleen on 2016/12/31.
@@ -19,7 +14,7 @@ public class AccountDO extends BaseDO {
     private String mobilePhone;
     private String email;
     private Date lastLoginTime;
-    private AccountStateEmum state;
+    private AccountStateEnum state;
 
     public String getUserName() {
         return userName;
@@ -69,11 +64,11 @@ public class AccountDO extends BaseDO {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public AccountStateEmum getState() {
+    public AccountStateEnum getState() {
         return state;
     }
 
-    public void setState(AccountStateEmum state) {
+    public void setState(AccountStateEnum state) {
         this.state = state;
     }
 
@@ -89,8 +84,7 @@ public class AccountDO extends BaseDO {
         accountDO.setMobilePhone(rs.getString("mobile_phone"));
         accountDO.setEmail(rs.getString("mobile_phone"));
         accountDO.setLastLoginTime(rs.getDate("last_login_time"));
-        AccountStateEmum accountStateEmum = Enum.valueOf(AccountStateEmum.class,rs.getString("state"));
-        accountDO.setState(accountStateEmum);
+        accountDO.setState(AccountStateEnum.valueOf(rs.getString("state")));
         return accountDO;
 
     }
