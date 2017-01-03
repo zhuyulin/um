@@ -26,13 +26,13 @@ public class AccountDAO extends BaseDAO  {
 
     public void updatePasswordById(String newpassword,Integer id){
         StringBuilder sql = new StringBuilder("update account set password=\"?\" where id=?");
-        List<AccountDO> updatepassword = getJdbcTemplate().query(sql.toString(),new AccountDO(),
+        getJdbcTemplate().query(sql.toString(),new AccountDO(),
                 new Object[]{newpassword,id});
     }
 
     public void createNewAccount(String username, String password, String mobile_phone, String email){
         StringBuilder sql = new StringBuilder("insert into account (user_name,password,mobile_phone,emaill) values (?,?,?,?)");
-        List<AccountDO> updatepassword = getJdbcTemplate().query(sql.toString(),new AccountDO(),
+        getJdbcTemplate().query(sql.toString(),new AccountDO(),
                 new Object[]{username,password,mobile_phone,email});
     }
 
