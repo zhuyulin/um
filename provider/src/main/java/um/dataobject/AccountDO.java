@@ -2,7 +2,7 @@ package um.dataobject;
 
 import com.sun.xml.internal.rngom.parse.host.Base;
 import org.springframework.jdbc.core.RowMapper;
-import um.emum.AccountStationEmum;
+import um.emum.AccountStateEmum;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ public class AccountDO extends BaseDO {
     private String mobilePhone;
     private String email;
     private Date lastLoginTime;
-    private AccountStationEmum station;
+    private AccountStateEmum state;
 
     public String getUserName() {
         return userName;
@@ -69,12 +69,12 @@ public class AccountDO extends BaseDO {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public AccountStationEmum getStation() {
-        return station;
+    public AccountStateEmum getState() {
+        return state;
     }
 
-    public void setStation(AccountStationEmum station) {
-        this.station = station;
+    public void setState(AccountStateEmum state) {
+        this.state = state;
     }
 
     @Override
@@ -89,7 +89,8 @@ public class AccountDO extends BaseDO {
         accountDO.setMobilePhone(rs.getString("mobile_phone"));
         accountDO.setEmail(rs.getString("mobile_phone"));
         accountDO.setLastLoginTime(rs.getDate("last_login_time"));
-        accountDO.setStation(AccountStationEmum.valueOf(rs.getString("station")));
+        AccountStateEmum accountStateEmum = Enum.valueOf(AccountStateEmum.class,rs.getString("state"));
+        accountDO.setState(accountStateEmum);
         return accountDO;
 
     }

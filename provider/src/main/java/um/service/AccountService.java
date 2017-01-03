@@ -90,7 +90,7 @@ public class AccountService implements IAccountService {
         accountVO.setMobilePhone(accountDO.getMobilePhone());
         accountVO.setLastLoginTime(accountDO.getLastLoginTime());
         accountVO.setEmail(accountDO.getEmail());
-        accountVO.setStation(accountDO.getStation().getStation());
+        accountVO.setStation(accountDO.getState().getState());
         return accountVO;
     }
 
