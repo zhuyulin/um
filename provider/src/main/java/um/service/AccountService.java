@@ -93,19 +93,4 @@ public class AccountService implements IAccountService {
         return accountVO;
     }
 
-    @Override
-    public AccountVO getAccount(Integer id) throws ServiceException {
-        //检查参数
-
-        AccountDO accountDO = (AccountDO) accountDAO.findByUserId(id);
-        AccountVO accountVO = new AccountVO();
-        accountVO.setUserName(accountDO.getUserName());
-        accountVO.setNickName(accountDO.getNickName());
-        accountVO.setMobilePhone(accountDO.getMobilePhone());
-        accountVO.setLastLoginTime(accountDO.getLastLoginTime());
-        accountVO.setEmail(accountDO.getEmail());
-        accountVO.setState(accountDO.getState().getState());
-        return accountVO;
-    }
-
 }
