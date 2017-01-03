@@ -20,9 +20,9 @@ public class TestAccountDAO extends AbsSpringTest {
 
     @Test
     public void accountServiceTest() throws ServiceException {
-        Integer logincheck = accountService.login("admin","123456");
-        System.out.println(logincheck);
-        Assert.assertTrue(logincheck.equals(1));
+        Integer loginCheck = accountService.login("admin","123456");
+        System.out.println(loginCheck);
+        Assert.assertTrue(loginCheck.equals(1));
 
     }
 }

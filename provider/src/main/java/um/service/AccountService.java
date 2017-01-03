@@ -17,29 +17,36 @@ public class AccountService implements IAccountService {
 
     @Override
     public Integer login(String username, String password)throws ServiceException {
-        List<AccountDO> checkusername = accountDAO.findByUserName(username);
+        List<AccountDO> checkUserName = accountDAO.findByUserName(username);
         if (StringUtils.isBlank(username)) {
             throw new ServiceException("用户名为空", "10001");
-
-        } else if (checkusername.size() == 0) {
-            throw new ServiceException("找不到用户名", "10002");
-
-        } else if (checkusername.size() == 1 && checkusername.get(1).getPassword().equals(DigestUtils.md5Hex(password))) {
-            return checkusername.get(1).getId();
+            return null;
         }
-        else throw new ServiceException("未知异常", "10003");
-    }
+        if (checkUserName.size() == 0) {
+            throw new ServiceException("找不到用户名", "10002");
+            return null;
+        }
+        if (checkUserName.size() >1) {
+            throw new ServiceException("存在多个用户", "10003");
+            return null;
+        }
+        if (checkUserName.size() == 1 && checkUserName.get(1).getPassword().equals(DigestUtils.md5Hex(password))) {
+            return checkUserName.get(1).getId();
+        }
+        }
+
+
 
     @Override
     public Integer register(String username, String password, String mobile_phone, String email)
             throws ServiceException{
-        List<AccountDO> checkusername = accountDAO.findByUserName(username);
+        List<AccountDO> checkUserName = accountDAO.findByUserName(username);
         if (StringUtils.isBlank(username)) {
-            throw new ServiceException("用户名为空", "10009");
+            throw new ServiceException("用户名为空", "10004");
 
         }
-        else if (checkusername.size() >0) {
-            throw new ServiceException("用户名已存在", "10008");
+        else if (checkUserName.size() >0) {
+            throw new ServiceException("用户名已存在", "10005");
         }
             else {
             accountDAO.createNewAccount(username,password,mobile_phone,email);
@@ -51,22 +58,23 @@ public class AccountService implements IAccountService {
 
     @Override
     public void resetPassword(Integer id, String oldpassword, String newpassword)throws ServiceException {
-        List<AccountDO> checkuserid = accountDAO.findByUserId(id);
+        List<AccountDO> checkUserId = accountDAO.findByUserId(id);
         if (id == null) {
-            throw new ServiceException("ID为空", "10004");
+            throw new ServiceException("ID为空", "10006");
 
-        } else if (checkuserid.size() == 0) {
-            throw new ServiceException("找不到该用户ID", "10005");
-
-        } else if (checkuserid.size() == 1 && !checkuserid.get(1).getPassword().equals(DigestUtils.md5Hex(oldpassword))){
-            throw new ServiceException("旧密码输入错误", "10007");
-
-        } else if (checkuserid.size() == 1 && checkuserid.get(1).getPassword().equals(DigestUtils.md5Hex(oldpassword))) {
-            accountDAO.updatePasswordById(DigestUtils.md5Hex(newpassword),id);
-            throw new ServiceException("密码修改成功", "10006");
         }
-        else throw new ServiceException("未知异常", "10003");
+        if (checkUserId.size() == 0) {
+            throw new ServiceException("找不到该用户ID", "10007");
 
+        }
+        if (checkUserId.size() == 1 && !checkUserId.get(1).getPassword().equals(DigestUtils.md5Hex(oldpassword))){
+            throw new ServiceException("旧密码输入错误", "10008");
+
+        }
+        if (checkUserId.size() == 1 && checkUserId.get(1).getPassword().equals(DigestUtils.md5Hex(oldpassword))) {
+            accountDAO.updatePasswordById(DigestUtils.md5Hex(newpassword),id);
+            throw new ServiceException("密码修改成功", "10009");
+        }
 
     }
 
