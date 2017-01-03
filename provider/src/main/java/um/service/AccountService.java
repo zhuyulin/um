@@ -18,8 +18,8 @@ public class AccountService implements IAccountService {
     @Override
     public Integer login(String username, String password) throws ServiceException {
         List<AccountDO> checkUserName = accountDAO.findByUserName(username);
-        if (checkUserName.size() == 1 && checkUserName.get(1).getPassword().equals(DigestUtils.md5Hex(password))){
-                return checkUserName.get(1).getId();
+        if (checkUserName.size() == 1 && checkUserName.get(0).getPassword().equals(DigestUtils.md5Hex(password))){
+                return checkUserName.get(0).getId();
         }
         else if (checkUserName.size() == 0) {
             throw new ServiceException("找不到用户名", "10002");
