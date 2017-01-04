@@ -20,11 +20,11 @@ public interface IAccountService {
 
     /**
      * 重置密码
-     * @param id 用户id
+     * @param username 用户名
      * @param oldPassword 旧密码
      * @param newPassword 新密码
      */
-    void resetPassword(Integer id,String oldPassword,String newPassword) throws ServiceException;
+    void resetPassword(String username,String oldPassword,String newPassword) throws ServiceException;
 
     /**
      * 登录

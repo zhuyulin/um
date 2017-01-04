@@ -14,7 +14,7 @@ public class AccountDO extends BaseDO {
     private String mobilePhone;
     private String email;
     private Date lastLoginTime;
-    private AccountStateEnum state;
+    private String state;
 
     public String getUserName() {
         return userName;
@@ -64,11 +64,11 @@ public class AccountDO extends BaseDO {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public AccountStateEnum getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(AccountStateEnum state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -84,7 +84,7 @@ public class AccountDO extends BaseDO {
         accountDO.setMobilePhone(rs.getString("mobile_phone"));
         accountDO.setEmail(rs.getString("mobile_phone"));
         accountDO.setLastLoginTime(rs.getDate("last_login_time"));
-        accountDO.setState(AccountStateEnum.valueOf(rs.getString("state")));
+        accountDO.setState((rs.getString("state")));
         return accountDO;
 
     }

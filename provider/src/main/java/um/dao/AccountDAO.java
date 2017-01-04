@@ -3,7 +3,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import um.dataobject.AccountDO;
-import um.vo.AccountVO;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Yuleen on 2016/12/31.
@@ -30,10 +31,35 @@ public class AccountDAO extends BaseDAO  {
                 new Object[]{newPassword,id});
     }
 
+
+    public void updatePasswordByUserName(String newPassword,String userName){
+        StringBuilder sql = new StringBuilder("update account set password=? where user_name=?");
+        getJdbcTemplate().update(sql.toString(),
+                new Object[]{newPassword,userName});
+    }
+
     public void createNewAccount(String userName, String password, String mobilePhone, String email){
-        StringBuilder sql = new StringBuilder("insert into account (user_name,password,mobile_phone,emaill) values (?,?,?,?)");
-        getJdbcTemplate().update(sql.toString(),new AccountDO(),
+        StringBuilder sql = new StringBuilder("insert into account (user_name,password,mobile_phone,email) values (?,?,?,?)");
+        getJdbcTemplate().update(sql.toString(),
                 new Object[]{userName,password,mobilePhone,email});
+    }
+
+    public void  gmtCreateById(Integer id){
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String time = dateFormat.format(now);
+        StringBuilder sql = new StringBuilder("update account set gmt_create=? where id=?");
+        getJdbcTemplate().update(sql.toString(),
+                new Object[]{time,id});
+    }
+
+    public void  lastLoginTimeById(Integer id){
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String time = dateFormat.format(now);
+        StringBuilder sql = new StringBuilder("update account set last_login_time=? where id=?");
+        getJdbcTemplate().update(sql.toString(),
+                new Object[]{time,id});
     }
 
 }

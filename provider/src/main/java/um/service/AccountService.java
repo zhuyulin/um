@@ -18,22 +18,24 @@ public class AccountService implements IAccountService {
     @Override
     public Integer login(String username, String password) throws ServiceException {
         List<AccountDO> checkUserName = accountDAO.findByUserName(username);
-        if (checkUserName.size() == 1 && checkUserName.get(0).getPassword().equals(DigestUtils.md5Hex(password))){
+        if  (StringUtils.isBlank(username)) {
+            throw new ServiceException("用户名为空", "10001");
+
+        }
+        else if (checkUserName.size() == 1 && checkUserName.get(0).getPassword().equals(DigestUtils.md5Hex(password))){
+            //最后一次登录时间
+            accountDAO.lastLoginTimeById(checkUserName.get(0).getId());
+            //返回登录用户ID
                 return checkUserName.get(0).getId();
         }
         else if (checkUserName.size() == 0) {
             throw new ServiceException("找不到用户名", "10002");
-
         }
         else if (checkUserName.size() >0) {
             throw new ServiceException("存在多个用户", "10003");
 
         }
-        else if  (StringUtils.isBlank(username)) {
-            throw new ServiceException("用户名为空", "10001");
-
-        }
-        else throw new ServiceException("密码错误", "10003");
+        else throw new ServiceException("密码错误", "10004");
         }
 
 
@@ -43,36 +45,35 @@ public class AccountService implements IAccountService {
             throws ServiceException{
         List<AccountDO> checkUserName = accountDAO.findByUserName(username);
         if (StringUtils.isBlank(username)) {
-            throw new ServiceException("用户名为空", "10004");
+            throw new ServiceException("用户名为空", "10005");
 
         }
         if (checkUserName.size() >0) {
-            throw new ServiceException("用户名已存在", "10005");
+            throw new ServiceException("用户名已存在", "10006");
         }
             else {
-            accountDAO.createNewAccount(username,password,mobilePhone,email);
-            return accountDAO.findByUserName(username).get(1).getId();
+            accountDAO.createNewAccount(username,DigestUtils.md5Hex(password),mobilePhone,email);
+            accountDAO.gmtCreateById(accountDAO.findByUserName(username).get(0).getId());
+            return accountDAO.findByUserName(username).get(0).getId();
 
         }
 
         }
 
     @Override
-    public void resetPassword(Integer id, String oldPassword, String newPassword)throws ServiceException {
-        List<AccountDO> checkUserId = accountDAO.findByUserId(id);
-        if (id == null) {
-            throw new ServiceException("ID为空", "10006");
-
+    public void resetPassword(String userName, String oldPassword, String newPassword)throws ServiceException {
+        if (userName == null) {
+            throw new ServiceException("用户名为空", "10005");
         }
-        else if (checkUserId.size() == 1 && checkUserId.get(0).getPassword().equals(DigestUtils.md5Hex(oldPassword))) {
-            accountDAO.updatePasswordById(DigestUtils.md5Hex(newPassword),id);
+        List<AccountDO> checkUserName = accountDAO.findByUserName(userName);
+        if (login(userName,oldPassword) != null && checkUserName.size() == 1 ){
+            accountDAO.updatePasswordByUserName(DigestUtils.md5Hex(newPassword),userName);
         }
-        else if (checkUserId.size() == 1 && !checkUserId.get(0).getPassword().equals(DigestUtils.md5Hex(oldPassword))){
-            throw new ServiceException("旧密码输入错误", "10008");
-
+        else if (login(userName,oldPassword) == null && checkUserName.size() == 1 ){
+            throw new ServiceException("密码错误", "10004");
         }
-        else if (checkUserId.size() == 0) {
-            throw new ServiceException("找不到该用户ID", "10007");
+        else if (checkUserName.size() == 0) {
+            throw new ServiceException("找不到该用户ID", "10006");
         }
         else throw new ServiceException("未知错误", "00000");
 
@@ -89,7 +90,7 @@ public class AccountService implements IAccountService {
         accountVO.setMobilePhone(accountDO.getMobilePhone());
         accountVO.setLastLoginTime(accountDO.getLastLoginTime());
         accountVO.setEmail(accountDO.getEmail());
-        accountVO.setState(accountDO.getState().getState());
+        accountVO.setState(accountDO.getState());
         return accountVO;
     }
 

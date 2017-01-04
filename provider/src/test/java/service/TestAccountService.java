@@ -15,7 +15,7 @@ public class TestAccountService extends AbsSpringTest {
     @Autowired
     private AccountService accountService;
 
-    //@Test
+    @Test
     public void login() throws ServiceException {
         Integer loginCheck = accountService.login("admin","123456");
         System.out.println(loginCheck);
@@ -24,10 +24,14 @@ public class TestAccountService extends AbsSpringTest {
     }
     @Test
     public void resetPassword() throws ServiceException {
-        //todo:debug
-        accountService.resetPassword(1,"123456","654321");
-        System.out.println("修改的用户名为："+accountService.getAccount(1).getUserName());
-       // Assert.assertEquals(accountDO.getPassword().toString(),"654321");
+        accountService.resetPassword("admin","123456","123456");
+        System.out.println();
+    }
+    @Test
+    public void register()throws ServiceException {
+        Integer registerCheck = accountService.register("zhuyulin","123456","123456789",
+                "123456@qq.com");
+        System.out.println(registerCheck);
     }
 }
 
