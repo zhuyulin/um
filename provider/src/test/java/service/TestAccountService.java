@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import um.dataobject.AccountDO;
 import um.exception.ServiceException;
 import um.service.AccountService;
 /**
