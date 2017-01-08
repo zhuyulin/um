@@ -11,7 +11,7 @@ public class ServiceException extends Exception {
         super(message);
     }
 
-    public ServiceException(String errorCode, String message){
+    public ServiceException(String message,String errorCode){
         super(message);
         this.errorCode = errorCode;
     }

@@ -9,7 +9,7 @@ import um.service.AccountService;
 /**
  * Created by Yuleen on 2017/1/1.
  */
-    @ContextConfiguration(locations = {"classpath:spring/spring-task5.xml"})
+@ContextConfiguration(locations = {"classpath:spring/spring-task5.xml"})
 public class TestAccountService extends AbsSpringTest {
     @Autowired
     private AccountService accountService;
@@ -28,8 +28,13 @@ public class TestAccountService extends AbsSpringTest {
     }
     @Test
     public void register()throws ServiceException {
-        Integer registerCheck = accountService.register("zhuyulin","123456","123456789",
-                "123456@qq.com");
+        Integer registerCheck = null;
+        try {
+            registerCheck = accountService.register("zhuyulin","123456","123456789",
+                    "123456@qq.com");
+        } catch (ServiceException e) {
+            if(!e.getErrorCode().equals("10006")) throw e;
+        }
         System.out.println(registerCheck);
     }
 }
