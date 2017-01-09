@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
  * Created by Yuleen on 2016/12/31.
  */
 @Repository
-public class AccountDAO extends BaseDAO{
+public class AccountDAO{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

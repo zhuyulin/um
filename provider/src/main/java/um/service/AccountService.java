@@ -39,20 +39,20 @@ public class AccountService implements IAccountService {
     @Override
     public Integer register(String username, String password, String mobilePhone, String email)
             throws ServiceException {
-        /*List<AccountDO> checkUserName = accountDAO.findByUserName(username);
+        AccountDO accountDO = accountDAO.findByUserName(username);
         if (StringUtils.isBlank(username)) {
             throw new ServiceException("用户名为空", "10005");
 
         }
-        if (checkUserName.size() > 0) {
+        if (accountDO != null) {
             throw new ServiceException("用户名已存在", "10006");
         } else {
+            //注册
             accountDAO.createNewAccount(username, DigestUtils.md5Hex(password), mobilePhone, email);
-            accountDAO.gmtCreateById(accountDAO.findByUserName(username).get(0).getId());
-            return accountDAO.findByUserName(username).get(0).getId();
+            accountDAO.gmtCreateById(accountDAO.findByUserName(username).getId());
+            return accountDAO.findByUserName(username).getId();
 
-        }*/
-        return null;
+        }
     }
 
     @Override
@@ -60,15 +60,17 @@ public class AccountService implements IAccountService {
         if (userName == null) {
             throw new ServiceException("用户名为空", "10005");
         }
-        /*AccountDO accountDO = accountDAO.findByUserName(userName);
-        if (login(userName, oldPassword) != null && checkUserName.size() == 1) {
-            accountDAO.updatePasswordByUserName(DigestUtils.md5Hex(newPassword), userName);
-        } else if (login(userName, oldPassword) == null && checkUserName.size() == 1) {
+        AccountDO accountDO = accountDAO.findByUserName(userName);
+        if (login(userName, oldPassword) == null ) {
             throw new ServiceException("密码错误", "10004");
-        } else if (checkUserName.size() == 0) {
-            throw new ServiceException("找不到该用户ID", "10006");
-        } else throw new ServiceException("未知错误", "00000");*/
+        }
+        if (accountDO == null ){
+            throw new ServiceException("用户名输入错误", "10006");
+        }
 
+        if (login(userName, oldPassword) != null && accountDO != null) {
+            accountDAO.updatePasswordByUserName(DigestUtils.md5Hex(newPassword), userName);
+        }
     }
 
     @Override
