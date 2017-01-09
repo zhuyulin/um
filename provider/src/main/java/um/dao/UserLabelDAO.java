@@ -20,14 +20,15 @@ public class UserLabelDAO {
      */
     public List<UserLabelDO> findByUserId(int userId){
         StringBuilder sql = new StringBuilder("select\n" +
-                "user_id;\n" +
-                "label_id;\n" +
-                "label_name\n" +
+                "ul.user_id;\n" +
+                "ul.label_id;\n" +
+                "l.label_name;\n" +
+                "ul.is_deleted\n" +
                 "from\n" +
                 "label l\n" +
                 "left join\n" +
-                "user_label ul on ul.`label_id` =l.`id` \n" +
-                "where `user_id` =?");
+                "user_label ul on ul.label_id =l.id \n" +
+                "where ul.user_id =?");
         List<UserLabelDO> findByUserId = jdbcTemplate.query(sql.toString(),new UserLabelDO(),
                 new Object[]{userId});
         if(findByUserId.size() >= 1)
@@ -43,7 +44,8 @@ public class UserLabelDAO {
         StringBuilder sql = new StringBuilder("select\n" +
                 "ul.user_id;\n" +
                 "ul.label_id;\n" +
-                "l.label_name\n" +
+                "l.label_name;\n" +
+                "ul.is_deleted\n" +
                 "from\n" +
                 "label l\n" +
                 "left join\n" +
