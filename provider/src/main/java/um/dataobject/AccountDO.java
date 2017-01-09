@@ -1,13 +1,18 @@
 package um.dataobject;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import um.enums.AccountStateEnum;
 
 /**
  * Created by Yuleen on 2016/12/31.
  */
-public class AccountDO extends BaseDO {
+public class AccountDO implements RowMapper, Serializable {
+    private int id;
+    private Date gmtCreate;
+    private Date gmtModified;
     private String userName;
     private String password;
     private String nickName;
@@ -15,6 +20,30 @@ public class AccountDO extends BaseDO {
     private String email;
     private Date lastLoginTime;
     private String state;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
     public String getUserName() {
         return userName;

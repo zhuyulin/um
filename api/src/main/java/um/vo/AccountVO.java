@@ -1,5 +1,4 @@
 package um.vo;
-
 import java.util.Date;
 
 /**
@@ -58,10 +57,7 @@ public class AccountVO {
         return state;
     }
 
-    public void setState(String station) {
-        this.state = station;
+    public void setState(String state) {
+        this.state = state;
     }
-//好友数
-
-    //属于哪几个群组
 }

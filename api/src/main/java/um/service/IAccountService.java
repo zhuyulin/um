@@ -36,11 +36,11 @@ public interface IAccountService {
 
     /**
      * 获取账号
-     * @param username
+     * @param userName
      * @return
      * @throws ServiceException
      */
-    public AccountVO getAccount(String username) throws ServiceException;
+    public AccountVO getAccount(String userName) throws ServiceException;
 
 }
 
