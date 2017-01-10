@@ -54,6 +54,6 @@ public class UserLabelDO  implements RowMapper, Serializable {
         userLabelDO.setLabelId(rs.getInt("label_id"));
         userLabelDO.setLabelName(rs.getString("label_name"));
         userLabelDO.setIsDeleted(rs.getString("is_deleted"));
-        return null;
+        return userLabelDO;
     }
 }

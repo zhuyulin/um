@@ -30,10 +30,10 @@ public class UserLabelDAO {
                 "label l on l.id=ul.label_id\n" +
                 "where\n" +
                 "ul.user_id=?");
-        List<UserLabelDO> findByUserId = jdbcTemplate.query(sql.toString(),new UserLabelDO(),
+        List<UserLabelDO> checkList = jdbcTemplate.query(sql.toString(),new UserLabelDO(),
                 new Object[]{userId});
-        if(findByUserId.size() >= 1)
-            return findByUserId;
+        if(checkList.size() >= 1)
+            return checkList;
         return null;
     }
 
@@ -53,9 +53,9 @@ public class UserLabelDAO {
                 "label l on l.id=ul.label_id\n" +
                 "where\n" +
                 "ul.user_id=? and ul.label_id=?");
-        List<UserLabelDO> checkUserIdAndLabelId = jdbcTemplate.query(sql.toString(),new UserLabelDO(),
+        List<UserLabelDO> checkList = jdbcTemplate.query(sql.toString(),new UserLabelDO(),
                 new Object[]{userId,labelId});
-            return checkUserIdAndLabelId;
+            return checkList;
     }
     /**
      * 输入用户ID，标签ID,对该用户进行添加标签。

@@ -28,14 +28,13 @@ public class TestAccountService extends AbsSpringTest {
     }
     @Test
     public void register()throws ServiceException {
-        Integer registerCheck = null;
+
         try {
-            registerCheck = accountService.register("zhuyulin","123456","123456789",
+            accountService.register("zhuyulin","123456","123456789",
                     "123456@qq.com");
         } catch (ServiceException e) {
-            if(!e.getErrorCode().equals("10006")) throw e;
+            if(!e.getErrorCode().equals("10005")) throw e;
         }
-        System.out.println(registerCheck);
     }
 }
 

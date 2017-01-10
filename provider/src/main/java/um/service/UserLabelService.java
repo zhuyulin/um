@@ -44,14 +44,18 @@ public class UserLabelService implements IUserLabelService {
         }
         List<UserLabelDO> list = userLabelDAO.checkUserIdAndLabelId(userId, userLabelId);
         if (list.size() == 0 ) {
-            throw new ServiceException("该标签不存在", "10008");
+            throw new ServiceException("该标签不存在", "10009");
         }
-        else userLabelDAO.deleteUserLabel(userId, userLabelId);
+
+        if (list.size() ==1 && list.get(0).getIsDeleted().equals("Y")) {
+            throw new ServiceException("该标签无效", "10010");
+        }
+        userLabelDAO.deleteUserLabel(userId, userLabelId);
 
         //debug
         List<UserLabelDO> list2 = userLabelDAO.checkUserIdAndLabelId(userId, userLabelId);
         if (list2.get(0).getIsDeleted().equals("Y")){
-            System.out.println("标签已经删除");
+            System.out.println("标签完成删除");
             return true;
         }
         return false;

@@ -14,17 +14,23 @@ public class TestUserLabelService extends AbsSpringTest {
     @Autowired
     private UserLabelService userLabelService;
 
-    //@Test
+    @Test
     public void addUserLabel() throws ServiceException {
-        boolean addLabel = userLabelService.addUserLabel(3,10004);
-        System.out.println(addLabel);
+        try{
+        userLabelService.addUserLabel(3,15);
+        } catch (ServiceException e) {
+            if(!e.getErrorCode().equals("10008")) throw e;
 
+        }
     }
     @Test
     public void deleteUserLabel() throws ServiceException {
-        boolean deleteLabel = userLabelService.deleteUserLabel(3,10014);
-        System.out.println(deleteLabel);
+        try{
+        userLabelService.deleteUserLabel(3,15);
+    } catch (ServiceException e) {
+        if(!e.getErrorCode().equals("10010")) throw e;
 
     }
+}
 
 }
