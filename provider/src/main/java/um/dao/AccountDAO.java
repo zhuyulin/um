@@ -1,13 +1,10 @@
 package um.dao;
 import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import um.dataobject.AccountDO;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+
 
 /**
  * Created by Yuleen on 2016/12/31.

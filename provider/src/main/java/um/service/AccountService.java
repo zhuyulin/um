@@ -9,8 +9,6 @@ import um.dataobject.AccountDO;
 import um.exception.ServiceException;
 import um.vo.AccountVO;
 
-import java.util.List;
-
 @Service
 public class AccountService implements IAccountService {
     @Autowired

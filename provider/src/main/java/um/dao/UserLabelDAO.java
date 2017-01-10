@@ -2,7 +2,7 @@ package um.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import um.dataobject.AccountDO;
+import org.springframework.stereotype.Repository;
 import um.dataobject.UserLabelDO;
 
 import java.util.List;
@@ -10,25 +10,26 @@ import java.util.List;
 /**
  * Created by Yuleen on 2017-01-10.
  */
+@Repository
 public class UserLabelDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
 
     /**
      * 输入用户ID，可输出该用户ID、标签ID、标签名称
      */
     public List<UserLabelDO> findByUserId(int userId){
         StringBuilder sql = new StringBuilder("select\n" +
-                "ul.user_id;\n" +
-                "ul.label_id;\n" +
-                "l.label_name;\n" +
-                "ul.is_deleted\n" +
-                "from\n" +
-                "label l\n" +
+                "ul.user_id as user_id,\n" +
+                "ul.label_id as label_id,\n" +
+                "l.label_name as label_name,\n" +
+                "ul.is_deleted as is_deleted\n" +
+                "FROM\n" +
+                "user_label ul\n" +
                 "left join\n" +
-                "user_label ul on ul.label_id =l.id \n" +
-                "where ul.user_id =?");
+                "label l on l.id=ul.label_id\n" +
+                "where\n" +
+                "ul.user_id=?");
         List<UserLabelDO> findByUserId = jdbcTemplate.query(sql.toString(),new UserLabelDO(),
                 new Object[]{userId});
         if(findByUserId.size() >= 1)
@@ -42,15 +43,16 @@ public class UserLabelDAO {
      */
     public List<UserLabelDO> checkUserIdAndLabelId(int userId,int labelId){
         StringBuilder sql = new StringBuilder("select\n" +
-                "ul.user_id;\n" +
-                "ul.label_id;\n" +
-                "l.label_name;\n" +
-                "ul.is_deleted\n" +
-                "from\n" +
-                "label l\n" +
+                "ul.user_id as user_id,\n" +
+                "ul.label_id as label_id,\n" +
+                "l.label_name as label_name,\n" +
+                "ul.is_deleted as is_deleted\n" +
+                "FROM\n" +
+                "user_label ul\n" +
                 "left join\n" +
-                "user_label ul on ul.label_id =l.id \n" +
-                "where ul.user_id =? and ul.label_id=?");
+                "label l on l.id=ul.label_id\n" +
+                "where\n" +
+                "ul.user_id=? and ul.label_id=?");
         List<UserLabelDO> checkUserIdAndLabelId = jdbcTemplate.query(sql.toString(),new UserLabelDO(),
                 new Object[]{userId,labelId});
             return checkUserIdAndLabelId;
@@ -70,7 +72,7 @@ public class UserLabelDAO {
      */
 
     public  UserLabelDO deleteUserLabel(int userId,int labelId){
-        StringBuilder sql = new StringBuilder("update user_label set is_deleter='Y' where user_id=? and label_ud=?");
+        StringBuilder sql = new StringBuilder("update user_label set is_deleted='Y' where user_id=? and label_id=?");
         jdbcTemplate.update(sql.toString(),
                 new Object[]{userId,labelId});
         return null;
