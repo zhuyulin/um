@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import um.dao.UserLabelDAO;
 import um.dataobject.UserLabelDO;
-import um.vo.UserLabelServiceVO;
+import um.vo.UserLabelVO;
 
 import java.util.List;
 
@@ -62,13 +62,16 @@ public class UserLabelService implements IUserLabelService {
     }
 
     @Override
-    public UserLabelServiceVO getLabel(int userId) throws ServiceException {
-            UserLabelDO userLabelDO = (UserLabelDO) userLabelDAO.findByUserId(userId);
-            UserLabelServiceVO userLabelVO = new UserLabelServiceVO();
-            userLabelVO.setLabelName(userLabelDO.getLabelName());
-            userLabelVO.setUserId(userLabelDO.getUserId());
-            userLabelVO.setLabelId(userLabelDO.getLabelId());
-            userLabelVO.setIsDeleted(userLabelDO.getIsDeleted());
+    public List<UserLabelVO> getLabel(int userId) throws ServiceException {
+            List<UserLabelDO> userLabelDO =userLabelDAO.findByUserId(userId);
+            List<UserLabelVO> userLabelVO = (List<UserLabelVO>) new UserLabelVO();
+
+            for (int i=0;i<=userLabelDO.size();i++) {
+                userLabelVO.get(i).setLabelName(userLabelDO.get(i).getLabelName());
+                userLabelVO.get(i).setUserId(userLabelDO.get(i).getUserId());
+                userLabelVO.get(i).setLabelId(userLabelDO.get(i).getLabelId());
+                userLabelVO.get(i).setIsDeleted(userLabelDO.get(i).getIsDeleted());
+            }
             return userLabelVO;
         }
     }

@@ -5,7 +5,7 @@ import um.exception.ServiceException;
 /**
  * Created by Yuleen on 2017/1/10.
  */
-public class UserLabelServiceVO {
+public class UserLabelVO {
     private int userId;
     private int labelId;
     private String labelName;

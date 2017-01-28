@@ -1,6 +1,8 @@
 package um.service;
 import um.exception.ServiceException;
-import um.vo.UserLabelServiceVO;
+import um.vo.UserLabelVO;
+
+import java.util.List;
 
 /**
  * Created by Yuleen on 2017-01-10.
@@ -28,5 +30,5 @@ public interface IUserLabelService {
      * @return
      * @throws ServiceException
      */
-    public UserLabelServiceVO getLabel(int userId) throws ServiceException;
+    public List<UserLabelVO> getLabel(int userId) throws ServiceException;
 }
