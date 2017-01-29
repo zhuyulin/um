@@ -53,7 +53,7 @@ public class UserFriendService implements IUserFriendService {
         if (list == false)
         {
             userFriendDAO.delUserFriend(userId,targetUserId);
-            System.out.println("删除成功");
+            System.out.println("好友解除成功");
             return true;
         }
         System.out.println("未找到该好友");
