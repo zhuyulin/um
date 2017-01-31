@@ -10,16 +10,16 @@ import java.sql.SQLException;
  * Created by Yuleen on 2017/1/30.
  */
 public class GroupDO implements RowMapper, Serializable {
-    private int groupId;
+    private Integer groupId;
     private String groupName;
-    private int parentId;
+    private Integer parentId;
     private String isDeleted;
 
-    public int getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
@@ -31,11 +31,11 @@ public class GroupDO implements RowMapper, Serializable {
         this.groupName = groupName;
     }
 
-    public int getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(int parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
