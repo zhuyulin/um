@@ -30,10 +30,19 @@ public class TestAccountService extends AbsSpringTest {
     public void register()throws ServiceException {
 
         try {
-            accountService.register("zhuyulin","123456","123456789",
+            accountService.register("admin123","123456","123456789",
                     "123456@qq.com");
         } catch (ServiceException e) {
             if(!e.getErrorCode().equals("10005")) throw e;
+        }
+    }
+
+    @Test
+    public void batchRegister() throws ServiceException{
+        for (int i=1; i<=1000; i++) {
+            String username = "testuser";
+            username = username.concat(String.valueOf(i));
+            accountService.register(username, "123456", "13888888888", "13888888888@qq.com");
         }
     }
 }

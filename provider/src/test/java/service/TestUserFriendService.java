@@ -30,4 +30,14 @@ public class TestUserFriendService extends AbsSpringTest {
     public void modifiedNickName()throws ServiceException{
         userFriendService.modifiedNickName(1,4,"nickname");
     }
+
+
+    @Test
+    public void batchAddUserFriend() throws ServiceException {
+        for (int i=1; i< 100 ; i++) {
+            for (int j=1; j<100; j++) {
+                userFriendService.addUserFriend(i, j);
+            }
+        }
+    }
 }

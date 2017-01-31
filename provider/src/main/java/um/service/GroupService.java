@@ -1,5 +1,4 @@
 package um.service;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +7,7 @@ import um.dao.GroupDAO;
 import um.dataobject.GroupDO;
 import um.exception.ServiceException;
 import um.service.transaction.grouptreenode.Tree;
-
+import um.vo.GroupVO;
 import java.util.List;
 
 /**
@@ -21,18 +20,19 @@ public class GroupService implements IGroupService {
     @Autowired
     GroupTreeCache groupTreeCache;
 
-    Tree<Integer> integerTree = groupTreeCache.getTree();
-
     @Override
     @Transactional
     public int addGroup(String groupName, int parentId) throws ServiceException {
         if (groupName == null || parentId == 0) {
             throw new ServiceException("群组名或者父群组ID为空", "10014");
         }
+        //查找重名
         List<GroupDO> checkList = groupDAO.getGroupIdByGroupName(groupName);
-        if (checkList == null){
+        //如果没有重名，则执行
+        if (checkList.size() == 0){
             groupDAO.addGroup(groupName,parentId);
-            int groupId=groupDAO.getGroupIdByGroupName(groupName).get(0).getGroupId();
+            int groupId = groupDAO.getGroupIdByGroupName(groupName).get(0).getGroupId();
+            Tree<Integer> integerTree = groupTreeCache.getTree();
             integerTree.addNode(integerTree.getNode(parentId),groupId);
             return groupId;
         }
@@ -46,6 +46,7 @@ public class GroupService implements IGroupService {
             throw new ServiceException("找不到该群组", "10015");
         }
         groupDAO.delGroup(groupId);
+        Tree<Integer> integerTree = groupTreeCache.getTree();
         integerTree.delNode(groupId);
         List<GroupDO> checkList = groupDAO.getGroupByGroupId(groupId);
         if (checkList == null){
@@ -61,6 +62,7 @@ public class GroupService implements IGroupService {
             throw new ServiceException("输入的群组ID或者新的父群组ID为空", "10016");
         }
         groupDAO.modifiedParentIdByGroupId(groupId, newParentId);
+        Tree<Integer> integerTree = groupTreeCache.getTree();
         integerTree.mofidiedNode(groupId,integerTree.getNode(newParentId));
         List<GroupDO> checkList = groupDAO.getGroupByGroupId(groupId);
         if (checkList.get(0).getParentId() == newParentId){
@@ -81,4 +83,18 @@ public class GroupService implements IGroupService {
         }
         return false;
     }
+    @Override
+    public List<GroupVO> getGroup(int groupId) throws ServiceException {
+        List<GroupDO> groupDO =groupDAO.getGroupByGroupId(groupId);
+        List<GroupVO> groupVO = (List<GroupVO>) new GroupVO();
+
+        for (int i=0;i < groupDO.size();i++) {
+            groupVO.get(i).setGroupId(groupDO.get(i).getGroupId());
+            groupVO.get(i).setGroupName(groupDO.get(i).getGroupName());
+            groupVO.get(i).setParentId(groupDO.get(i).getParentId());
+            groupVO.get(i).setIsDeleted(groupDO.get(i).getIsDeleted());
+        }
+        return groupVO;
+    }
 }
+

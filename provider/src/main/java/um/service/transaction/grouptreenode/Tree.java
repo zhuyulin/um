@@ -33,11 +33,13 @@ public class Tree<T> {
     public void delNode(T nodeValue){
         //删除节点
         TreeNode<T> temp = getNode(nodeValue);
-        for (int i=0; i < temp.getParent().getNodeList().size(); i++){
-            T value = temp.getParent().getNodeList().get(i).getT();
-            if (value == nodeValue) {
-                temp.getParent().getNodeList().remove(i);
-                break;
+        if (temp != null) {
+            for (int i = 0; i < temp.getParent().getNodeList().size(); i++) {
+                T value = temp.getParent().getNodeList().get(i).getT();
+                if (value == nodeValue) {
+                    temp.getParent().getNodeList().remove(i);
+                    break;
+                }
             }
         }
     }

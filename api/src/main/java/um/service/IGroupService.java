@@ -1,6 +1,9 @@
 package um.service;
 
 import um.exception.ServiceException;
+import um.vo.GroupVO;
+
+import java.util.List;
 
 /**
  * Created by Yuleen on 2017/1/30.
@@ -40,4 +43,6 @@ public interface IGroupService {
      * @throws ServiceException
      */
     boolean modifiedGroupName(int groupId,String newGroupName) throws ServiceException;
+
+    public List<GroupVO> getGroup(int userId) throws ServiceException;
 }

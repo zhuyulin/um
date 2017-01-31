@@ -71,8 +71,7 @@ public class GroupDAO {
      */
     public void addGroup(String groupName,int parentId){
         StringBuilder sql = new StringBuilder("insert into group_table (group_name,parent_id) values (?,?)");
-        jdbcTemplate.update(sql.toString(),
-                new Object[]{groupName,parentId});
+        jdbcTemplate.update(sql.toString(), new Object[]{groupName,parentId});
     }
 
     /**

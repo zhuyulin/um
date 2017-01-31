@@ -82,7 +82,7 @@ public class UserFriendService implements IUserFriendService {
         List<UserFriendDO> userFriendDO = userFriendDAO.findByUserId(userId);
         List<UserFriendVO> userFriendVO = (List<UserFriendVO>) new UserFriendVO();
 
-        for (int i=0;i<=userFriendDO.size();i++){
+        for (int i=0; i< userFriendDO.size();i++){
             userFriendVO.get(i).setAddTime(userFriendDO.get(i).getAddTime());
             userFriendVO.get(i).setIsDeleted(userFriendDO.get(i).getIsDeleted());
             userFriendVO.get(i).setNickName(userFriendDO.get(i).getNickName());

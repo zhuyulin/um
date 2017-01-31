@@ -66,7 +66,7 @@ public class UserLabelService implements IUserLabelService {
             List<UserLabelDO> userLabelDO =userLabelDAO.findByUserId(userId);
             List<UserLabelVO> userLabelVO = (List<UserLabelVO>) new UserLabelVO();
 
-            for (int i=0;i<=userLabelDO.size();i++) {
+            for (int i=0; i < userLabelDO.size(); i++) {
                 userLabelVO.get(i).setLabelName(userLabelDO.get(i).getLabelName());
                 userLabelVO.get(i).setUserId(userLabelDO.get(i).getUserId());
                 userLabelVO.get(i).setLabelId(userLabelDO.get(i).getLabelId());

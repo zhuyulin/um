@@ -24,12 +24,12 @@ public class AccountGroupRelaService implements IAccountGroupRelaService {
 
         }
         List<AccountGroupRelaDO>  checkList = accountGroupRelaDAO.checkAccountGroupRela(userId, groupId);
-        if (checkList != null) {
+        if (checkList.size() != 0) {
             throw new ServiceException("该用户已经添加到该群组中", "10014");
         }
         else{
             accountGroupRelaDAO.modifiedAccountGroupRela(userId, groupId);
-            System.out.println("用户已经添加到该群组中");
+            System.out.println("添加完成");
             return true;
         }
 
