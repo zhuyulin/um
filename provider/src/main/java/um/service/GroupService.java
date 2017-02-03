@@ -8,6 +8,8 @@ import um.dataobject.GroupDO;
 import um.exception.ServiceException;
 import um.service.transaction.grouptreenode.Tree;
 import um.vo.GroupVO;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,16 +87,18 @@ public class GroupService implements IGroupService {
     }
     @Override
     public List<GroupVO> getGroup(int groupId) throws ServiceException {
-        List<GroupDO> groupDO =groupDAO.getGroupByGroupId(groupId);
-        List<GroupVO> groupVO = (List<GroupVO>) new GroupVO();
+        List<GroupDO> groupDOList =groupDAO.getGroupByGroupId(groupId);
+        List<GroupVO> groupVOList = new ArrayList<>();
 
-        for (int i=0;i < groupDO.size();i++) {
-            groupVO.get(i).setGroupId(groupDO.get(i).getGroupId());
-            groupVO.get(i).setGroupName(groupDO.get(i).getGroupName());
-            groupVO.get(i).setParentId(groupDO.get(i).getParentId());
-            groupVO.get(i).setIsDeleted(groupDO.get(i).getIsDeleted());
+        for (GroupDO groupDO : groupDOList) {
+            GroupVO groupVO = new GroupVO();
+            groupVO.setGroupId(groupDO.getGroupId());
+            groupVO.setGroupName(groupDO.getGroupName());
+            groupVO.setParentId(groupDO.getParentId());
+            groupVO.setIsDeleted(groupDO.getIsDeleted());
+            groupDOList.add(groupDO);
         }
-        return groupVO;
+        return groupVOList;
     }
 }
 
