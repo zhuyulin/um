@@ -3,6 +3,7 @@ package um.service;
 import um.exception.ServiceException;
 import um.vo.UserFriendVO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,12 @@ public interface IUserFriendService {
      * @return 返回true代表添加成功，返回false代表添加失败
      */
     void modifiedNickName(int userId,int targetUserId,String nickName) throws ServiceException;
+
+    /**
+     * 查询用户好友
+     * @param userId 用户ID
+     * @throws ServiceException
+     */
 
     public List<UserFriendVO> getFriend(int userId) throws ServiceException;
 }

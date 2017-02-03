@@ -7,6 +7,7 @@ import um.dataobject.UserFriendDO;
 import um.exception.ServiceException;
 import um.vo.UserFriendVO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 public class UserFriendService implements IUserFriendService {
     @Autowired
-    private UserFriendDAO userFriendDAO;
+    UserFriendDAO userFriendDAO;
 
 
     @Override
@@ -80,7 +81,9 @@ public class UserFriendService implements IUserFriendService {
     public List<UserFriendVO> getFriend(int userId) throws ServiceException {
 
         List<UserFriendDO> userFriendDO = userFriendDAO.findByUserId(userId);
-        List<UserFriendVO> userFriendVO = (List<UserFriendVO>) new UserFriendVO();
+
+        List<UserFriendVO> userFriendVO= (List<UserFriendVO>) new UserFriendVO();
+
 
         for (int i=0; i< userFriendDO.size();i++){
             userFriendVO.get(i).setAddTime(userFriendDO.get(i).getAddTime());

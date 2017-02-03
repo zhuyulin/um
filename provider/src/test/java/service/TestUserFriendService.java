@@ -4,8 +4,12 @@ import common.AbsSpringTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import um.dataobject.UserFriendDO;
 import um.exception.ServiceException;
 import um.service.UserFriendService;
+import um.vo.UserFriendVO;
+
+import java.util.List;
 
 /**
  * Created by Yuleen on 2017/1/28.
@@ -38,6 +42,15 @@ public class TestUserFriendService extends AbsSpringTest {
             for (int j=1; j<100; j++) {
                 userFriendService.addUserFriend(i, j);
             }
+        }
+    }
+
+
+    @Test
+    public void getFriend() throws ServiceException{
+        List<UserFriendVO> friendList = userFriendService.getFriend(2);
+        for (int i = 0; i< friendList.size(); i++){
+            System.out.println(friendList.get(i).getTargetUserId());
         }
     }
 }

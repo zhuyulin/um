@@ -1,4 +1,5 @@
 package um.vo;
+import java.util.List;
 
 /**
  * Created by Yuleen on 2017/1/28.
@@ -9,6 +10,8 @@ public class UserFriendVO {
     private String addTime;
     private String isDeleted;
     private String nickName;
+    private Integer totalCount;
+
 
     public int getUserId() {
         return userId;
@@ -49,4 +52,14 @@ public class UserFriendVO {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
+
+
 }
