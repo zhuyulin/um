@@ -25,20 +25,20 @@ public class UserFriendService implements IUserFriendService {
             throw new ServiceException("用户ID或者需要添加的好友ID为空", "10011");
         }
         //检查之前添加过好友，但是好友被删除。
-        boolean checkFriendIsDeleted = userFriendDAO.checkFriendIsDeleted(userId,targetUserId);
+        boolean checkFriendIsDeleted = userFriendDAO.checkFriendIsDeleted(userId, targetUserId);
         //检查之前从未添加过好友。
-        boolean checkFriend = userFriendDAO.checkFriend(userId,targetUserId);
+        boolean checkFriend = userFriendDAO.checkFriend(userId, targetUserId);
 
-        if (checkFriendIsDeleted == true){
+        if (checkFriendIsDeleted == true) {
 
-            userFriendDAO.recoverFriend(userId,targetUserId);
+            userFriendDAO.recoverFriend(userId, targetUserId);
             System.out.println("好友添加成功（恢复好友）");
             return true;
 
         }
 
-        if (checkFriend == true){
-            userFriendDAO.addUserNewFriend(userId,targetUserId);
+        if (checkFriend == true) {
+            userFriendDAO.addUserNewFriend(userId, targetUserId);
             System.out.println("好友添加成功（全新添加）");
             return true;
         }
@@ -51,9 +51,8 @@ public class UserFriendService implements IUserFriendService {
             throw new ServiceException("用户ID或者需要添加的好友ID为空", "10011");
         }
         boolean list = userFriendDAO.checkFriend(userId, targetUserId);
-        if (list == false)
-        {
-            userFriendDAO.delUserFriend(userId,targetUserId);
+        if (list == false) {
+            userFriendDAO.delUserFriend(userId, targetUserId);
             System.out.println("好友解除成功");
             return true;
         }
@@ -67,12 +66,10 @@ public class UserFriendService implements IUserFriendService {
             throw new ServiceException("用户ID或者需要添加的好友ID为空", "10011");
         }
         boolean list = userFriendDAO.checkFriendisValid(userId, targetUserId);
-        if (list == true)
-        {
-            userFriendDAO.modifiedNickName(nickName,userId,targetUserId);
-            System.out.println("备注已经修改为:"+nickName);
-        }
-        else {
+        if (list == true) {
+            userFriendDAO.modifiedNickName(nickName, userId, targetUserId);
+            System.out.println("备注已经修改为:" + nickName);
+        } else {
             throw new ServiceException("没有添加好友", "10012");
         }
     }
@@ -80,19 +77,20 @@ public class UserFriendService implements IUserFriendService {
     @Override
     public List<UserFriendVO> getFriend(int userId) throws ServiceException {
 
-        List<UserFriendDO> userFriendDO = userFriendDAO.findByUserId(userId);
+        List<UserFriendDO> userFriendDOList = userFriendDAO.findByUserId(userId);
 
-        List<UserFriendVO> userFriendVO= (List<UserFriendVO>) new UserFriendVO();
+        List<UserFriendVO> userFriendVOList = new ArrayList<>();
 
-
-        for (int i=0; i< userFriendDO.size();i++){
-            userFriendVO.get(i).setAddTime(userFriendDO.get(i).getAddTime());
-            userFriendVO.get(i).setIsDeleted(userFriendDO.get(i).getIsDeleted());
-            userFriendVO.get(i).setNickName(userFriendDO.get(i).getNickName());
-            userFriendVO.get(i).setTargetUserId(userFriendDO.get(i).getTargetUserId());
-            userFriendVO.get(i).setTargetUserId(userFriendDO.get(i).getTargetUserId());
-            userFriendVO.get(i).setUserId(userFriendDO.get(i).getUserId());
+        for (UserFriendDO userFriendDO : userFriendDOList) {
+            UserFriendVO userFriendVO = new UserFriendVO();
+            userFriendVO.setAddTime(userFriendDO.getAddTime());
+            userFriendVO.setIsDeleted(userFriendDO.getIsDeleted());
+            userFriendVO.setNickName(userFriendDO.getNickName());
+            userFriendVO.setTargetUserId(userFriendDO.getTargetUserId());
+            userFriendVO.setTargetUserId(userFriendDO.getTargetUserId());
+            userFriendVO.setUserId(userFriendDO.getUserId());
+            userFriendVOList.add(userFriendVO);
         }
-        return userFriendVO;
+        return userFriendVOList;
     }
 }

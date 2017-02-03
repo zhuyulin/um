@@ -49,8 +49,8 @@ public class TestUserFriendService extends AbsSpringTest {
     @Test
     public void getFriend() throws ServiceException{
         List<UserFriendVO> friendList = userFriendService.getFriend(2);
-        for (int i = 0; i< friendList.size(); i++){
-            System.out.println(friendList.get(i).getTargetUserId());
+        for (UserFriendVO aFriendList : friendList) {
+            System.out.println(aFriendList.getTargetUserId());
         }
     }
 }
