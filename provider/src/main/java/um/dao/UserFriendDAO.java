@@ -128,4 +128,16 @@ public class UserFriendDAO {
         jdbcTemplate.update(sql.toString(), new Object[]{nickName,userId,targetFriendUserId});
         return null;
     }
+
+
+    public Integer getFriendNum(int userId){
+        StringBuilder sql = new StringBuilder("SELECT\n" +
+                "distinct target_user_id\n" +
+                "from user_friend\n" +
+                "where user_id=1 and is_deleted='N'");
+        List<UserFriendDO> list = jdbcTemplate.query(sql.toString(),new UserFriendDO(),
+                new Object[]{userId});
+
+        return list.size();
+    }
 }

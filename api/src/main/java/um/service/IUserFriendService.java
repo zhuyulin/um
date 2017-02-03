@@ -36,10 +36,17 @@ public interface IUserFriendService {
     void modifiedNickName(int userId,int targetUserId,String nickName) throws ServiceException;
 
     /**
+     *
+     * @param userId 用户ID
+     * @return 该用户好友数量
+     */
+    Integer getFriendNum(int userId) throws ServiceException;
+
+    /**
      * 查询用户好友
      * @param userId 用户ID
      * @throws ServiceException
      */
 
-    public List<UserFriendVO> getFriend(int userId) throws ServiceException;
+    List<UserFriendVO> getFriend(int userId) throws ServiceException;
 }

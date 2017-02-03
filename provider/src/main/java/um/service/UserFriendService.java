@@ -73,12 +73,18 @@ public class UserFriendService implements IUserFriendService {
             throw new ServiceException("没有添加好友", "10012");
         }
     }
+    @Override
+    public Integer getFriendNum(int userId) throws ServiceException{
+        if (userId == 0) {
+            throw new ServiceException("用户ID为空", "10011");
+        }
+        return userFriendDAO.getFriendNum(userId);
+    }
 
     @Override
     public List<UserFriendVO> getFriend(int userId) throws ServiceException {
 
         List<UserFriendDO> userFriendDOList = userFriendDAO.findByUserId(userId);
-
         List<UserFriendVO> userFriendVOList = new ArrayList<>();
 
         for (UserFriendDO userFriendDO : userFriendDOList) {
@@ -91,6 +97,7 @@ public class UserFriendService implements IUserFriendService {
             userFriendVO.setUserId(userFriendDO.getUserId());
             userFriendVOList.add(userFriendVO);
         }
+
         return userFriendVOList;
     }
 }
